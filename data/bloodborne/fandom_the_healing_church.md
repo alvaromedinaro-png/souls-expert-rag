@@ -1,0 +1,68 @@
+---
+title: The Healing Church
+game: bloodborne
+source: fandom
+url: https://bloodborne.fandom.com/wiki/The_Healing_Church
+license: CC BY-SA
+---
+
+# The Healing Church
+The Healing Church is an organization in Bloodborne.
+
+## Description
+
+The Healing Church is one of the main factions within Bloodborne and is responsible for most major events that take place within the game itself.
+
+## Lore
+
+
+### Founding and Rise to Power
+
+The Healing Church is a religious organization founded in Yharnam by Laurence, a former Byrgenwerth scholar and pupil of Master Willem, who discovered a special concoction of Old Blood within the ancient labyrinths that could be used in a healing process known as Blood Ministration. While Willem did not fully trust the blood, Laurence believed it to be a miracle to be shared. Accompanied by other like-minded scholars, Laurence left Byrgenwerth and founded the Healing Church in Yharnam, distributing the blood across the city.
+The process of Blood Ministration was discovered by the Choir, the highest ranking members of authority in the Church in communion with Ebrietas. The Healing Church was not directly affiliated with the hunters but they did collaborate with them upon the Scourge of Beasts outbreak, the first of these church-empowered hunters being Ludwig. Following Ludwig, it was quite common for members of the Healing Church to become hunter. So much so that to this day, many Yharnamites attribute modern hunting to the Church, as can be seen throughout the Cathedral Ward.
+Quickly, the Healing Church in Yharnam became renowned across the continent, attracting the sick and afflicted who were seeking refuge from their ailments. However, even if they were cured, none could resist the tantalizing euphoria educed by this mysterious blood concoction, and the townspeople became addicted.
+
+### War with Cainhurst
+
+Despite the power and renown garnered by the Healing Church, its authority wasn't uncontested. At some point following the discovery of the old blood, a Byrgenwerth scholar betrayed his colleagues by introducing the old blood to the Vilebloods of Cainhurst Castle. Angered by this act, the Healing Church claimed that the blood given to the Vilebloods was forbidden, and spread rumours that the Vilebloods themselves had threatened the purity of blood healing, and become fiendish and bloodthirsty creatures. The Vilebloods and the Healing Church had thus become sworn enemies.
+Eventually tensions escalated into outright hostilities. A group of Church hunters would go on to form the Executioners, dedicating themselves to eradicating the Vilebloods. At great cost, the Executioners had succeeded in defeating the Vilebloods, ruthlessly slaughtering any Vileblood they could get their hands on as they stormed Castle Cainhurst, whilst driving the survivors into hiding. However, Logarius, the leader of the Executioners, became the reluctant jailer to the surviving Queen Annalise, and the Church, not having the means to occupy Cainhurst Castle, destroyed the road to it and allowed its location to be forgotten over time.
+
+## The Choir
+
+The Choir is a secret group of highest ranking members of the Healing Church. The upper echelons of the Healing Church are formed by the School of Mensis, based in the Unseen Village. The Choir is established to commune with Ebrietas, the left-behind Great One, and to conduct experiments to evolve the human race, or so they believe.
+
+## The School of Mensis
+
+The School of Mensis controls the Unseen Village. The school has its roots in Byrgenwerth, a bygone institute of learning. Members of the school are mostly scholars who dedicate themselves to understanding the secrets and nature of the Great Ones and how to use them towards the advantage of humanity.
+The upper echelons of the Healing Church are formed by the School of Mensis, based in the Unseen Village, and the Choir occupying the Upper Cathedral Ward.
+
+## Associates
+
+- Sister Adella
+- Alfred, Hunter of Vilebloods
+- Brador, Church Assassin
+- Mensis Scholar Damian
+- Defector Antal
+- Edgar, Choir Intelligencer
+- Father Gascoigne
+- Laurence, the First Vicar
+- Ludwig
+- Martyr Logarius
+- Micolash, Host of the Nightmare
+- Saint Adeline
+- Simon the Harrowed
+- Tomb Prospector Olek
+- Yurie, the Last Scholar
+- Blood Minister
+- Queen Killer
+- Tomb Prospector Gremia
+- Madman Wallar
+- Forgotten Madman
+- Vicar Amelia
+
+### Notable Associates in the comic adaption
+
+- Father Galhad
+- Priest Clement
+- Brother Eugenius
+- Hunter Elio

@@ -58,6 +58,7 @@ Cada documento conserva la URL de su fuente en los metadatos, y el agente la mue
 | **Ruta de encabezados al inicio de cada chunk** (`[Knight Artorias > Lore > Dark Souls]`) | Muchos fragmentos solo dicen "he" o "she". La ruta le da al embedding la entidad de la que se habla |
 | **Nodo `rewrite_query` con salida estructurada** | (1) Traduce la pregunta al inglés, el idioma de las fuentes. (2) Resuelve referencias al historial ("¿y él?"), lo que lleva la memoria también a la búsqueda. (3) Detecta el juego |
 | **Filtro por metadatos `game`** | Evita mezclar conceptos con el mismo nombre en distintos juegos ("Endings", "Stats"). Los artículos generales se incluyen siempre |
+| **Dos modelos: `gemini-3.5-flash-lite` para reescribir y `gemini-3.5-flash` para responder** | Reescribir la consulta es una tarea sencilla. El plan gratuito de `gemini-3.5-flash` solo permite 20 peticiones al día, así que dedicarlo solo a la respuesta duplica las preguntas posibles |
 | **Grafo fijo en lugar de un agente con herramientas** | El enunciado pide usar la base de conocimiento en *cada* consulta. Un flujo determinista lo garantiza y es más fácil de depurar |
 | **`MemorySaver` + `thread_id`** | Memoria nativa de LangGraph: cada conversación tiene su propio estado. Al LLM se envían solo los últimos 12 mensajes (`trim_messages`) para limitar el coste |
 | **IDs deterministas e ingesta por lotes con reintentos** | La ingesta se puede reanudar si el plan gratuito de Gemini devuelve un error 429 de cuota |
@@ -120,8 +121,12 @@ usa temperatura 0.3: algo de naturalidad sin perder fidelidad a las fuentes.
 - **API key de Gemini**, gratuita en [Google AI Studio](https://aistudio.google.com/apikey).
 - Dependencias en [requirements.txt](requirements.txt): `langchain`, `langchain-google-genai`,
   `langchain-chroma`, `langgraph`, `chromadb`, `python-dotenv`, `requests`, `beautifulsoup4` y `streamlit`.
-- Modelos por defecto: `gemini-3.5-flash` (chat) y `gemini-embedding-001` (embeddings). Se pueden
-  cambiar con las variables `GEMINI_CHAT_MODEL` y `GEMINI_EMBEDDING_MODEL`.
+- Modelos por defecto: `gemini-3.5-flash` (respuesta), `gemini-3.5-flash-lite` (reescritura de la consulta)
+  y `gemini-embedding-001` (embeddings). Se pueden cambiar con las variables `GEMINI_CHAT_MODEL`,
+  `GEMINI_REWRITE_MODEL` y `GEMINI_EMBEDDING_MODEL`.
+- **Cuotas del plan gratuito:** unas 20 peticiones al día para `gemini-3.5-flash` (unas 20 preguntas)
+  y 1.000 embeddings al día. La base vectorial ya viene indexada en `chroma_db/`, así que no hace falta
+  gastar embeddings en reindexar.
 
 ## Instalación y ejecución
 

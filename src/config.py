@@ -14,6 +14,9 @@ COLLECTION_NAME = "souls_lore"
 
 # Modelos de Gemini (se pueden sobrescribir con variables de entorno).
 CHAT_MODEL = os.getenv("GEMINI_CHAT_MODEL", "gemini-3.5-flash")
+# La reescritura de la consulta es una tarea sencilla: un modelo "lite" basta
+# y no consume la cuota diaria (muy limitada en el plan gratuito) del modelo principal.
+REWRITE_MODEL = os.getenv("GEMINI_REWRITE_MODEL", "gemini-3.5-flash-lite")
 EMBEDDING_MODEL = os.getenv("GEMINI_EMBEDDING_MODEL", "models/gemini-embedding-001")
 
 # Juegos indexados; "general" agrupa artículos de toda la saga.
@@ -63,10 +66,10 @@ def get_embeddings():
     return GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL)
 
 
-def get_llm(temperature: float = 0.3):
+def get_llm(temperature: float = 0.3, model: str = CHAT_MODEL):
     from langchain_google_genai import ChatGoogleGenerativeAI
     load_api_key()
-    return ChatGoogleGenerativeAI(model=CHAT_MODEL, temperature=temperature)
+    return ChatGoogleGenerativeAI(model=model, temperature=temperature)
 
 
 def get_vectorstore():

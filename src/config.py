@@ -66,10 +66,12 @@ def get_embeddings():
     return GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL)
 
 
-def get_llm(temperature: float = 0.3, model: str = CHAT_MODEL):
+def get_llm(temperature: float | None = 0.3, model: str = CHAT_MODEL):
+    """temperature=None usa el valor del modelo (los modelos "lite" no admiten cambiarlo)."""
     from langchain_google_genai import ChatGoogleGenerativeAI
     load_api_key()
-    return ChatGoogleGenerativeAI(model=model, temperature=temperature)
+    kwargs = {} if temperature is None else {"temperature": temperature}
+    return ChatGoogleGenerativeAI(model=model, **kwargs)
 
 
 def get_vectorstore():

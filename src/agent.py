@@ -56,7 +56,7 @@ def format_context(docs: list[Document]) -> str:
 def build_agent(checkpointer=None):
     """Construye y compila el grafo. Devuelve el agente listo para invoke()."""
     llm = get_llm()
-    rewriter = get_llm(temperature=0, model=REWRITE_MODEL).with_structured_output(SearchQuery)
+    rewriter = get_llm(temperature=None, model=REWRITE_MODEL).with_structured_output(SearchQuery)
     vectorstore = get_vectorstore()
 
     def rewrite_query(state: AgentState) -> dict:

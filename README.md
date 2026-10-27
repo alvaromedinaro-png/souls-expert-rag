@@ -29,7 +29,7 @@ más valor.
 | bloodborne.fandom.com | 29 | Lore, jefes, mecánicas y finales de Bloodborne |
 | eldenring.fandom.com | 33 | Lore, semidioses, mecánicas y finales de Elden Ring |
 | en.wikipedia.org | 10 | Desarrollo, lanzamiento y recepción de cada juego, Miyazaki, soulslike |
-| **Total** | **105** | **~786.000 caracteres (~260 páginas), 1.333 chunks** |
+| **Total** | **105** | **~764.000 caracteres (~254 páginas), 1.333 chunks** |
 
 El contenido de Fandom y Wikipedia tiene licencia [CC BY-SA](https://creativecommons.org/licenses/by-sa/3.0/).
 Cada documento conserva la URL de su fuente en los metadatos, y el agente la muestra con cada respuesta.
@@ -87,7 +87,8 @@ lore, personajes, jefes, mecánicas, finales e historia de desarrollo.
   sugieren...", "una teoría es...").
 - Sé conciso: 1 a 3 párrafos o una lista breve, salvo que te pidan detalle.
 - Usa el historial de la conversación para entender referencias como "él", "ese jefe" o
-  "lo anterior".
+  "lo anterior". Si una referencia no se puede resolver con el historial (p. ej. "¿qué le pasó
+  a él?" al empezar una conversación), NO supongas de quién se trata: pide al usuario que lo aclare.
 
 ## Límites
 - Si el contexto no contiene la información, dilo con claridad: "No tengo información sobre eso
@@ -106,13 +107,14 @@ lore, personajes, jefes, mecánicas, finales e historia de desarrollo.
 | **Nombres propios en inglés** | Las fuentes están en inglés y las traducciones oficiales cambian según el juego y la región. Usar el nombre original evita confusiones y mejora las búsquedas posteriores |
 | **Reconocer la ambigüedad** | Gran parte del lore Souls son teorías de la comunidad. El agente debe distinguir lo que es un hecho de lo que es una interpretación |
 | **Longitud acotada** | Respuestas de chat legibles. El usuario puede pedir más detalle |
-| **Uso del historial** | Refuerza la coherencia entre turnos, junto con la memoria del grafo |
+| **Uso del historial y aclaraciones** | Refuerza la coherencia entre turnos, junto con la memoria del grafo. Pedir aclaración en vez de suponer evita respuestas sobre el personaje equivocado (lo detecté al probar la contraprueba de memoria: sin esta regla, el agente se inventaba a quién se refería "él") |
 | **Frase fija cuando no hay información** | Comportamiento predecible y honesto en lugar de una respuesta inventada (ver ejemplo 6 del notebook) |
 | **Rechazo fuera de dominio** | Mantiene al agente como experto en un solo tema (ver ejemplo 7 del notebook) |
 | **Protección de las instrucciones** | Defensa básica contra la inyección de prompts |
 
 El segundo prompt, `REWRITE_PROMPT`, solo prepara la búsqueda (traducción, resolución de referencias
-y detección del juego) y se ejecuta con temperatura 0 para que sea determinista. El de generación
+y detección del juego). Resuelve los pronombres ambiguos hacia el tema principal de la conversación y,
+si no hay historial, no añade nombres que el usuario no haya dicho (con `gemini-3.5-flash-lite`, que usa valores de muestreo fijos). El de generación
 usa temperatura 0.3: algo de naturalidad sin perder fidelidad a las fuentes.
 
 ## Requisitos

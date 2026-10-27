@@ -36,7 +36,7 @@ with st.sidebar:
         "Wikipedia (RAG con Gemini + ChromaDB + LangGraph)."
     )
     st.button("Nueva conversación", on_click=reset_conversation, use_container_width=True)
-    show_debug = st.toggle("Mostrar consulta de búsqueda", value=False)
+    show_debug = st.toggle("Mostrar búsqueda y modelo", value=False)
     st.caption(f"Conversación: `{st.session_state.thread_id}`")
     st.caption("Contenido de las wikis bajo licencia CC BY-SA.")
 
@@ -47,7 +47,8 @@ agent = load_agent()
 
 def render_extras(turn: dict):
     if show_debug:
-        st.caption(f"🔎 Búsqueda: *{turn['search_query']}* · juego: `{turn['game'] or 'todos'}`")
+        st.caption(f"🔎 Búsqueda: *{turn['search_query']}* · juego: `{turn['game'] or 'todos'}`"
+                   f" · modelo: `{turn['model']}`")
     with st.expander("Fuentes"):
         for title, url in turn["sources"]:
             st.markdown(f"- [{title}]({url})")

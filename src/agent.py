@@ -20,7 +20,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, MessagesState, StateGraph
 from pydantic import BaseModel, Field
 
-from src.config import REWRITE_MODEL, get_llm, get_vectorstore
+from src.config import REWRITE_MODELS, get_llm, get_vectorstore
 from src.prompts import CONTEXT_TEMPLATE, REWRITE_PROMPT, SYSTEM_PROMPT
 
 TOP_K = 6
@@ -56,7 +56,7 @@ def format_context(docs: list[Document]) -> str:
 def build_agent(checkpointer=None):
     """Construye y compila el grafo. Devuelve el agente listo para invoke()."""
     llm = get_llm()
-    rewriter = get_llm(temperature=None, model=REWRITE_MODEL).with_structured_output(SearchQuery)
+    rewriter = get_llm(temperature=0, models=REWRITE_MODELS, schema=SearchQuery)
     vectorstore = get_vectorstore()
 
     def rewrite_query(state: AgentState) -> dict:
@@ -109,6 +109,8 @@ def ask(agent, question: str, thread_id: str) -> dict:
         "answer": state["messages"][-1].text,
         "search_query": state["search_query"],
         "game": state["game"],
+        # Modelo que respondió realmente (puede ser uno de respaldo)
+        "model": state["messages"][-1].response_metadata.get("model_name", "?"),
         "sources": sources,
     }
 

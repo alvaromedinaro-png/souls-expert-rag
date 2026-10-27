@@ -17,6 +17,18 @@ CHAT_MODEL = os.getenv("GEMINI_CHAT_MODEL", "gemini-3.5-flash")
 # La reescritura de la consulta es una tarea sencilla: un modelo "lite" basta
 # y no consume la cuota diaria (muy limitada en el plan gratuito) del modelo principal.
 REWRITE_MODEL = os.getenv("GEMINI_REWRITE_MODEL", "gemini-3.5-flash-lite")
+
+
+def _model_list(env_var: str, default: str) -> list[str]:
+    return [m.strip() for m in os.getenv(env_var, default).split(",") if m.strip()]
+
+
+# Modelos de respaldo: cada modelo de Gemini tiene su propia cuota diaria, así
+# que si uno se agota (429), está saturado (503) o no responde a tiempo, se usa
+# el siguiente. (gemini-flash-latest se descartó: saturado, tardaba ~2 min.)
+CHAT_MODELS = [CHAT_MODEL, *_model_list("GEMINI_CHAT_FALLBACKS", "gemini-3-flash-preview,gemini-3.1-flash-lite")]
+FALLBACK_TIMEOUT = 45  # segundos antes de pasar al siguiente modelo
+REWRITE_MODELS = [REWRITE_MODEL, *_model_list("GEMINI_REWRITE_FALLBACKS", "gemini-3.1-flash-lite")]
 EMBEDDING_MODEL = os.getenv("GEMINI_EMBEDDING_MODEL", "models/gemini-embedding-001")
 
 # Juegos indexados; "general" agrupa artículos de toda la saga.
@@ -66,12 +78,34 @@ def get_embeddings():
     return GoogleGenerativeAIEmbeddings(model=EMBEDDING_MODEL)
 
 
-def get_llm(temperature: float | None = 0.3, model: str = CHAT_MODEL):
-    """temperature=None usa el valor del modelo (los modelos "lite" no admiten cambiarlo)."""
+def get_llm(temperature: float = 0.3, models: list[str] = CHAT_MODELS, schema=None):
+    """Devuelve el LLM con respaldo automático entre los modelos indicados.
+
+    Si un modelo falla por cuota agotada (429) o saturación (503), la misma
+    petición se repite con el siguiente. `schema` activa la salida estructurada.
+    """
+    from httpx import TimeoutException
     from langchain_google_genai import ChatGoogleGenerativeAI
+    from langchain_google_genai.chat_models import GoogleAPIError, GoogleRateLimitError
     load_api_key()
-    kwargs = {} if temperature is None else {"temperature": temperature}
-    return ChatGoogleGenerativeAI(model=model, **kwargs)
+
+    chain = []
+    for i, model in enumerate(models):
+        is_last = i == len(models) - 1
+        # Sin reintentos ni esperas largas salvo en el último: ante un límite
+        # diario, reintentar solo retrasa ~30 s el cambio al siguiente modelo.
+        kwargs = {} if is_last else {"max_retries": 1, "timeout": FALLBACK_TIMEOUT}
+        if "lite" not in model:  # los modelos "lite" no admiten cambiar la temperatura
+            kwargs["temperature"] = temperature
+        llm = ChatGoogleGenerativeAI(model=model, **kwargs)
+        chain.append(llm.with_structured_output(schema) if schema else llm)
+
+    primary, *fallbacks = chain
+    if not fallbacks:
+        return primary
+    return primary.with_fallbacks(
+        fallbacks,
+        exceptions_to_handle=(GoogleRateLimitError, GoogleAPIError, TimeoutException))
 
 
 def get_vectorstore():

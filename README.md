@@ -2,8 +2,7 @@
 
 Agente de IA que responde preguntas sobre los juegos de FromSoftware usando su propia base de
 conocimiento vectorial. Combina **RAG** con **Google Gemini** (LLM y embeddings), **ChromaDB** y
-un agente en **LangGraph** con memoria de conversación. Se usa desde un notebook (Jupyter o Colab)
-o desde una interfaz web en **Streamlit**.
+un agente en **LangGraph** con memoria de conversación. 
 
 ## Dominio elegido
 
@@ -17,10 +16,6 @@ El agente responde sobre:
 - **Finales** de Bloodborne y Elden Ring.
 - **Desarrollo y recepción:** Hidetaka Miyazaki, FromSoftware, el género *soulslike*.
 
-Elegí este dominio porque su lore es **críptico, fragmentado y lleno de nombres propios**, justo el
-escenario en el que un LLM sin RAG tiende a inventar datos y en el que recuperar las fuentes aporta
-más valor.
-
 ### Base de conocimiento
 
 | Fuente | Documentos | Contenido |
@@ -29,7 +24,6 @@ más valor.
 | bloodborne.fandom.com | 29 | Lore, jefes, mecánicas y finales de Bloodborne |
 | eldenring.fandom.com | 33 | Lore, semidioses, mecánicas y finales de Elden Ring |
 | en.wikipedia.org | 10 | Desarrollo, lanzamiento y recepción de cada juego, Miyazaki, soulslike |
-| **Total** | **105** | **~764.000 caracteres (~254 páginas), 1.333 chunks** |
 
 El contenido de Fandom y Wikipedia tiene licencia [CC BY-SA](https://creativecommons.org/licenses/by-sa/3.0/).
 Cada documento conserva la URL de su fuente en los metadatos, y el agente la muestra con cada respuesta.
@@ -120,7 +114,7 @@ usa temperatura 0.3: algo de naturalidad sin perder fidelidad a las fuentes.
 
 ## Requisitos
 
-- **Python 3.10 o superior** (desarrollado con 3.12, la misma versión que usa Colab).
+- **Python 3.10 o superior** (desarrollado con 3.12).
 - **API key de Gemini**, gratuita en [Google AI Studio](https://aistudio.google.com/apikey).
 - Dependencias en [requirements.txt](requirements.txt): `langchain`, `langchain-google-genai`,
   `langchain-chroma`, `langgraph`, `chromadb`, `python-dotenv`, `requests`, `beautifulsoup4` y `streamlit`.
